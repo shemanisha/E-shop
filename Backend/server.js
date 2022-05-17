@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const productRoute = require("./router/product");
 const categoryRoute = require("./router/categories");
+const userRoute = require("./router/user");
 const app = express();
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(morgan("tiny"));
 app.use("/product", productRoute);
 app.use("/categories", categoryRoute);
+app.use("/user", userRoute);
 
 //database connection
 mongoose
