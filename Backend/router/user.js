@@ -179,6 +179,7 @@ router.post("/login", (req, res) => {
         const token = jwt.sign(
           {
             userId: user.id,
+            isAdmin: user.isAdmin,
           },
           process.env.SECRETKEY,
           {
@@ -197,6 +198,22 @@ router.post("/login", (req, res) => {
       }
     }
   });
+});
+
+router.get("/get/count", (req, res) => {
+  User.countDocuments()
+    .then((count) => {
+      return res.status(200).json({
+        Usercount: count,
+        success: true,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        message: err.message,
+        success: false,
+      });
+    });
 });
 
 module.exports = router;

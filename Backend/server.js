@@ -7,6 +7,7 @@ const authJwt = require("./helpers/jwtMiddleware");
 const productRoute = require("./router/product");
 const categoryRoute = require("./router/categories");
 const userRoute = require("./router/user");
+const orderRoute = require("./router/order");
 const errorHandler = require("./helpers/errorHandler");
 const app = express();
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(errorHandler);
 app.use("/product", productRoute);
 app.use("/categories", categoryRoute);
 app.use("/user", userRoute);
+app.use("/order", orderRoute);
 
 //database connection
 mongoose
