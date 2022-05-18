@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../model/User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 //New user registration
 router.post("/register", (req, res) => {
@@ -164,6 +165,38 @@ router.delete("/:userId", (req, res) => {
         success: false,
       });
     });
+});
+
+//Login user
+router.post("/login", (req, res) => {
+  User.findOne({ email: req.body.email }).then((user) => {
+    if (!user) {
+      return res.status(404).json({
+        message: "User doesn't exist",
+      });
+    } else {
+      if (bcrypt.compareSync(req.body.passwordHash, user.passwordHash)) {
+        const token = jwt.sign(
+          {
+            userId: user.id,
+          },
+          process.env.SECRETKEY,
+          {
+            expiresIn: "1d",
+          }
+        );
+        return res.status(200).json({
+          message: "User is authenticated",
+          user: user.email,
+          token: token,
+        });
+      } else {
+        res.status(400).json({
+          message: "Incorrect password",
+        });
+      }
+    }
+  });
 });
 
 module.exports = router;
