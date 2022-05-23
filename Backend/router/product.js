@@ -1,8 +1,30 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const multer = require("multer");
 const Category = require("../model/Category");
 const router = express.Router();
 const Product = require("../model/Product");
+const FILE_TYPE_MAP = {
+  "image/png": "png",
+  "image/jpeg": "jpeg",
+  "image/jpg": "jpg",
+};
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const isValid = FILE_TYPE_MAP[file.mimetype];
+    let uploadError = new Error("invalid image type");
+    if (isValid) {
+      uploadError = null;
+    }
+    cb(uploadError, "public/uploads");
+  },
+  filename: (req, file, cb) => {
+    const filename = file.originalname.split(" ").join("-");
+    const extension = FILE_TYPE_MAP[file.mimetype];
+    cb(null, `${filename}-${Date.now()}.${extension}`);
+  },
+});
+const upload = multer({ storage: storage });
 
 //getProducts
 router.get("/getProducts", (req, res) => {
@@ -51,7 +73,17 @@ router.get("/:productid", (req, res) => {
 });
 
 //addProduct if valid category exist
-router.post("/addProduct", (req, res) => {
+router.post("/addProduct", upload.single("image"), (req, res) => {
+  const file = req.file;
+
+  if (!file) {
+    return res.status(400).json({
+      message: "No image in request",
+    });
+  }
+  const image = req.file.filename;
+  const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+  const imageUrl = `${basePath}${image}`;
   Category.findById(req.body.category).then((category1) => {
     if (!category1) {
       console.log(category1);
@@ -63,7 +95,6 @@ router.post("/addProduct", (req, res) => {
       name,
       description,
       richDescription,
-      image,
       brand,
       price,
       category,
@@ -77,7 +108,7 @@ router.post("/addProduct", (req, res) => {
       name,
       description,
       richDescription,
-      image,
+      image: imageUrl,
       brand,
       price,
       category,
@@ -86,7 +117,9 @@ router.post("/addProduct", (req, res) => {
       numReviews,
       isFeatured,
     });
-
+    console.log(imageUrl);
+    console.log(product);
+    return;
     product
       .save()
       .then((createdProduct) => {
@@ -230,5 +263,40 @@ router.get("/get/featured/:limit", (req, res) => {
       });
     });
 });
+
+router.put(
+  "/gallery-images/:productid",
+  upload.array("images", 10),
+  (req, res) => {
+    const files = req.files;
+    const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+    const imagesPath = [];
+    if (files) {
+      files.map((file) => {
+        imagesPath.push(`${basePath} ${file.filename}`);
+      });
+    }
+
+    Product.findByIdAndUpdate(
+      req.params.productid,
+      {
+        images: imagesPath,
+      },
+      { new: true }
+    )
+      .then((product) => {
+        return res.status(200).json({
+          product: product,
+          success: true,
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          message: err.message,
+          success: false,
+        });
+      });
+  }
+);
 
 module.exports = router;
