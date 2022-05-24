@@ -13,19 +13,18 @@ const path = require("path");
 const app = express();
 dotenv.config();
 
-const api = process.env.API_URL;
 const portno = process.env.PORT || 3000;
 
 //Middleware
 app.use(cors());
 app.options("*", cors());
-
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(authJwt());
 app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 app.use(errorHandler);
-console.log(path.join(__dirname + "/public/uploads"));
+// path.join(__dirname + "/public/uploads");
+
 //Routes
 app.use("/product", productRoute);
 app.use("/categories", categoryRoute);

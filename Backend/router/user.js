@@ -200,6 +200,7 @@ router.post("/login", (req, res) => {
   });
 });
 
+//To get total count of user
 router.get("/get/count", (req, res) => {
   User.countDocuments()
     .then((count) => {

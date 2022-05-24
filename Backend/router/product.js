@@ -4,11 +4,15 @@ const multer = require("multer");
 const Category = require("../model/Category");
 const router = express.Router();
 const Product = require("../model/Product");
+
+//mimetye declaration
 const FILE_TYPE_MAP = {
   "image/png": "png",
   "image/jpeg": "jpeg",
   "image/jpg": "jpg",
 };
+
+//multer configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = FILE_TYPE_MAP[file.mimetype];
@@ -28,8 +32,6 @@ const upload = multer({ storage: storage });
 
 //getProducts
 router.get("/getProducts", (req, res) => {
-  //5f15d5b2cb4a6642bddc0fe7
-  //5f15d545f3a046427a1c26e2
   //get product based on categories
   let filter = {};
   if (req.query.categories) {
@@ -117,9 +119,7 @@ router.post("/addProduct", upload.single("image"), (req, res) => {
       numReviews,
       isFeatured,
     });
-    console.log(imageUrl);
-    console.log(product);
-    return;
+
     product
       .save()
       .then((createdProduct) => {
@@ -164,7 +164,6 @@ router.delete("/:productid", (req, res) => {
 });
 
 //updateProduct
-
 router.put("/:productid", upload.single("image"), (req, res) => {
   if (!mongoose.isValidObjectId(req.params.productid)) {
     return res.status(400).send("Invalid product id");
@@ -251,6 +250,7 @@ router.put("/:productid", upload.single("image"), (req, res) => {
     });
 });
 
+//get total count of products
 router.get("/get/count", (req, res) => {
   Product.countDocuments()
     .then((count) => {
@@ -267,6 +267,7 @@ router.get("/get/count", (req, res) => {
     });
 });
 
+//To limit the featured product
 router.get("/get/featured/:limit", (req, res) => {
   const limit = req.params.limit ? req.params.limit : 0;
   Product.find({ isFeatured: true })
@@ -285,6 +286,7 @@ router.get("/get/featured/:limit", (req, res) => {
     });
 });
 
+// To update gallery images of a product
 router.put(
   "/gallery-images/:productid",
   upload.array("images", 10),
