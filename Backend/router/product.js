@@ -75,7 +75,7 @@ router.get("/:productid", (req, res) => {
 //addProduct if valid category exist
 router.post("/addProduct", upload.single("image"), (req, res) => {
   const file = req.file;
-
+  console.log("file", file);
   if (!file) {
     return res.status(400).json({
       message: "No image in request",
@@ -165,11 +165,32 @@ router.delete("/:productid", (req, res) => {
 
 //updateProduct
 
-router.put("/:productid", (req, res) => {
+router.put("/:productid", upload.single("image"), (req, res) => {
+  if (!mongoose.isValidObjectId(req.params.productid)) {
+    return res.status(400).send("Invalid product id");
+  }
+  let imagePath;
+  const file = req.file;
+  Product.findById(req.params.productid)
+    .then((productexist) => {
+      if (file) {
+        const image = file.filename;
+        const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+        imagePath = `${basePath}${image}`;
+      } else {
+        imagePath = productexist.image;
+      }
+    })
+    .catch((err) => {
+      return res.status(404).json({
+        message: "Product doesnt exist!",
+        success: false,
+      });
+    });
+
   Category.findById(req.body.category)
     .then((category1) => {
       if (!category1) {
-        console.log(category1);
         return res.status(400).json({
           message: "Invalid Category",
         });
@@ -178,7 +199,6 @@ router.put("/:productid", (req, res) => {
         name,
         description,
         richDescription,
-        image,
         brand,
         price,
         category,
@@ -194,7 +214,7 @@ router.put("/:productid", (req, res) => {
           name: name,
           description: description,
           richDescription: richDescription,
-          image: image,
+          image: imagePath,
           brand: brand,
           price: price,
           category: category,
@@ -206,6 +226,7 @@ router.put("/:productid", (req, res) => {
         { new: true }
       )
         .then((updatedProduct) => {
+          console.log(updatedProduct);
           if (!updatedProduct) {
             return res.status(404).json({
               message: "Product doesn't exist",
