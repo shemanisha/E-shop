@@ -6,6 +6,8 @@ const router = express.Router();
 //getOrders
 router.get("/getOrders", (req, res) => {
   Order.find()
+    .populate("user", "name")
+    .sort({ dateOrdered: -1 })
     .then((orders) => {
       return res.status(200).json({
         orders: orders,
@@ -21,9 +23,35 @@ router.get("/getOrders", (req, res) => {
     });
 });
 
+//getById
+router.get("/:orderid", (req, res) => {
+  Order.findById(req.params.orderid)
+    .populate("user", "name")
+    .populate({
+      path: "orderItems",
+      populate: {
+        path: "product",
+        populate: "category",
+      },
+    })
+    .then((order) => {
+      return res.status(200).json({
+        order: order,
+        message: "Orders fetched successfully",
+        success: true,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        err: err.message,
+        success: false,
+      });
+    });
+});
+
 //AddOrder
 router.post("/addOrder", async (req, res) => {
-  let newOrderItemsIds = Promise.all(
+  const newOrderItemsIds = Promise.all(
     req.body.orderItems.map(async (orderitem) => {
       let newOrderItem = new OrderItem({
         quantity: orderitem.quantity,
@@ -35,7 +63,20 @@ router.post("/addOrder", async (req, res) => {
   );
 
   const orderItemsIdsResolved = await newOrderItemsIds;
+  const totalPrices = await Promise.all(
+    orderItemsIdsResolved.map(async (orderItemsId) => {
+      const orderItem = await OrderItem.findById(orderItemsId).populate(
+        "product",
+        "price"
+      );
+      const totalPrice = orderItem.product.price * orderItem.quantity;
 
+      return totalPrice;
+    })
+  );
+
+  const totalPrice = totalPrices.reduce((a, b) => a + b, 0);
+  console.log(totalPrice);
   const {
     shippingAddress1,
     shippingAddress2,
@@ -44,11 +85,10 @@ router.post("/addOrder", async (req, res) => {
     country,
     phone,
     status,
-    totalPrice,
     user,
   } = req.body;
   const order = new Order({
-    orderItemsIdsResolved,
+    orderItems: orderItemsIdsResolved,
     shippingAddress1,
     shippingAddress2,
     city,
@@ -56,26 +96,136 @@ router.post("/addOrder", async (req, res) => {
     country,
     phone,
     status,
-    totalPrice,
+    totalPrice: totalPrice,
     user,
   });
 
-  res.send(order);
-  //   order
-  //     .save()
-  //     .then((order) => {
-  //       return res.status(201).json({
-  //         order: order,
-  //         message: "Order created successfully",
-  //         success: true,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       return res.status(500).json({
-  //         err: err.message,
-  //         success: false,
-  //       });
-  //     });
+  order
+    .save()
+    .then((order) => {
+      return res.status(201).json({
+        order: order,
+        message: "Order created successfully",
+        success: true,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        err: err.message,
+        success: false,
+      });
+    });
+});
+
+//update order
+
+router.put("/:orderid", (req, res) => {
+  const { status } = req.body;
+  Order.findByIdAndUpdate(req.params.orderid, {
+    status: status,
+  })
+    .then((updatedOrder) => {
+      if (!updatedOrder) {
+        return res.status(404).json({
+          message: "Order doesn't exist",
+          success: false,
+        });
+      }
+      return res.status(200).json({
+        order: updatedOrder,
+        message: "Order updated successfully",
+        success: true,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err.message,
+        success: false,
+      });
+    });
+});
+
+//deleteOrder
+router.delete("/:orderid", (req, res) => {
+  Order.findByIdAndRemove(req.params.orderid)
+    .then((deletedOrder) => {
+      if (!deletedOrder) {
+        return res.status(404).json({
+          message: "Order doesn't exist",
+          success: false,
+        });
+      }
+      deletedOrder.orderItems.map((order) => {
+        OrderItem.findByIdAndDelete(order).then(() => {
+          return res.status(200).json({
+            order: order,
+            message: "Order deleted successfully",
+            success: true,
+          });
+        });
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        message: err.message,
+        success: false,
+      });
+    });
+});
+
+//get Totalsales
+router.get("/get/TotalSales", (req, res) => {
+  const totalSales = Order.aggregate([
+    {
+      $group: { _id: null, totalsales: { $sum: "$totalPrice" } },
+    },
+  ]).then((totalSales) => {
+    console.log(totalSales);
+    return res.status(200).send({ totalSales: totalSales.pop().totalsales });
+  });
+});
+
+//get total count of orders
+router.get("/get/count", (req, res) => {
+  Order.countDocuments()
+    .then((count) => {
+      return res.status(200).json({
+        count: count,
+        success: true,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        message: err.message,
+        success: false,
+      });
+    });
+});
+
+//getting orders placed by user
+router.get("/get/userorders/:userid", (req, res) => {
+  Order.find({ user: req.params.userid })
+    .populate({
+      path: "orderItems",
+      populate: {
+        path: "product",
+        populate: "category",
+      },
+    })
+    .sort({ dateOrdered: -1 })
+    .then((userorders) => {
+      return res.status(200).json({
+        orders: userorders,
+        message: "Orders fetched successfully",
+        success: true,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        err: err.message,
+        success: false,
+      });
+    });
 });
 
 module.exports = router;

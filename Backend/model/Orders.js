@@ -37,6 +37,10 @@ const OrderSchema = new mongoose.Schema({
     required: true,
     default: "Pending",
   },
+  totalPrice: {
+    type: String,
+    required: true,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
@@ -55,3 +59,21 @@ OrderSchema.set("toJSON", {
 });
 
 module.exports = mongoose.model("orders", OrderSchema);
+
+// {
+//   "orderItems":[
+//   {"quantity":0,
+//   "product":""},
+//   {"quantity":2,
+//   "product":"6072d4e83abd910cb7358aac"}
+// ],
+// "status":"1",
+// "shippingAddress1":"Flowers Street",
+// "shippingAddress2":"13",
+// "city":"Prague",
+// "zip":"15541",
+// "country":"Czech Republic",
+// "phone":"688874451",
+// "totalPrice":1240.9,
+// "user":"62849f624ad9cec17b517929"
+// }
