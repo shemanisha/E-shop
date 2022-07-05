@@ -1,5 +1,6 @@
 const express = require("express");
 const Category = require("../model/Category");
+const mongoose = require("mongoose");
 const router = express.Router();
 
 //getCategories
@@ -71,6 +72,9 @@ router.post("/addCategory", (req, res) => {
 
 //deleteCategory
 router.delete("/:categoryid", (req, res) => {
+  if (!mongoose.isValidObjectId(req.params.categoryid)) {
+    return res.status(400).send("Invalid category id");
+  }
   Category.findByIdAndRemove(req.params.categoryid)
     .then((deletedcategory) => {
       if (!deletedcategory) {
@@ -94,6 +98,9 @@ router.delete("/:categoryid", (req, res) => {
 
 //updateCategory
 router.put("/:categoryid", (req, res) => {
+  if (!mongoose.isValidObjectId(req.params.categoryid)) {
+    return res.status(400).send("Invalid category id");
+  }
   const { name, color, icon, image } = req.body;
   Category.findByIdAndUpdate(req.params.categoryid, {
     name: name,

@@ -76,7 +76,7 @@ router.post("/addOrder", async (req, res) => {
   );
 
   const totalPrice = totalPrices.reduce((a, b) => a + b, 0);
-  console.log(totalPrice);
+
   const {
     shippingAddress1,
     shippingAddress2,

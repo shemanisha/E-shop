@@ -36,10 +36,10 @@ router.get("/getProducts", (req, res) => {
   let filter = {};
   if (req.query.categories) {
     filter = { category: req.query.categories.split(",") };
-    console.log(filter);
   }
   Product.find({ filter })
     .select()
+    .populate("category")
     .then((products) => {
       return res.status(200).json({
         products: products,
@@ -77,7 +77,7 @@ router.get("/:productid", (req, res) => {
 //addProduct if valid category exist
 router.post("/addProduct", upload.single("image"), (req, res) => {
   const file = req.file;
-  console.log("file", file);
+
   if (!file) {
     return res.status(400).json({
       message: "No image in request",
