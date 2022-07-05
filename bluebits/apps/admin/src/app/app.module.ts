@@ -13,6 +13,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
+import { TagModule } from 'primeng/tag';
+import { InputMaskModule } from 'primeng/inputmask';
 
 import { AppComponent } from './app.component';
 
@@ -28,6 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ProductFormComponent } from './pages/products/product-form/product-form.component';
+import { UserListComponent } from './pages/users/user-list/user-list.component';
+import { UserFormComponent } from './pages/users/user-form/user-form.component';
 
 const routes: Routes = [
   {
@@ -41,6 +45,9 @@ const routes: Routes = [
       { path: 'categoryList', component: CategoryListComponent },
       { path: 'categoryForm', component: CategoriesFormComponent },
       { path: 'categoryForm/:id', component: CategoriesFormComponent },
+      { path: 'userList', component: UserListComponent },
+      { path: 'userForm', component: UserFormComponent },
+      { path: 'userForm/:id', component: UserFormComponent },
     ],
   },
 ];
@@ -54,6 +61,8 @@ const routes: Routes = [
     CategoriesFormComponent,
     ProductFormComponent,
     ProductListComponent,
+    UserListComponent,
+    UserFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +84,8 @@ const routes: Routes = [
     InputSwitchModule,
     DropdownModule,
     EditorModule,
+    TagModule,
+    InputMaskModule,
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent],
