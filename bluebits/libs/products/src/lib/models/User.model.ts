@@ -3,11 +3,11 @@ export class User {
   name?: string;
   email?: string;
   isAdmin?: boolean;
-  password?: string;
+  passwordHash?: string;
   phone?: number;
   street?: string;
   apartment?: string;
-  zipcode?: string;
+  zip?: string;
   city?: string;
   country?: string;
 }

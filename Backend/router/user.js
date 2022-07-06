@@ -18,6 +18,7 @@ router.post("/register", (req, res) => {
     city,
     country,
   } = req.body;
+  console.log(req.body);
   passwordHash = bcrypt.hashSync(passwordHash, 10);
   const user = new User({
     name,
@@ -153,10 +154,11 @@ router.delete("/:userId", (req, res) => {
   if (!mongoose.isValidObjectId(req.params.userId)) {
     return res.status(400).send("Invalid user id");
   }
-  User.findByIdAndDelete(req.params.userid)
+  console.log(req.params.userId);
+  User.findByIdAndRemove(req.params.userid)
     .then((user) => {
       return res.status(200).json({
-        message: "Users deleted successfully",
+        message: "User deleted successfully",
         success: true,
       });
     })

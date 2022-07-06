@@ -1,9 +1,11 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, UserService } from '@bluebits/products';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'admin-user-list',
@@ -15,7 +17,8 @@ export class UserListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private userService: UserService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -27,7 +30,8 @@ export class UserListComponent implements OnInit {
       message: 'Are you sure that you want to delete this product?',
       accept: () => {
         this.userService.deleteUser(userid).subscribe(
-          () => {
+          (data) => {
+            console.log(data);
             this._getUsers();
             this.messageService.add({
               severity: 'success',

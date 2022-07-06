@@ -19,6 +19,7 @@
               label="Cancel"
               icon="pi pi-minus"
               styleClass="p-button-secondary"
+              (onClick)="onCancel()"
             ></p-button>
           </div>
         </p-toolbar>
@@ -48,7 +49,11 @@
               <small
                 *ngIf="userForm['email'].invalid && isSubmitted"
                 class="p-error"
-                >Email is required</small
+                ><span *ngIf="userForm['email'].getError('required')"
+                  >Email is required</span
+                ><span *ngIf="userForm['email'].getError('email')"
+                  >Email is invalid</span
+                ></small
               >
             </div>
             <div class="p-field col-4">
@@ -142,6 +147,7 @@
             <div class="p-field col-4">
               <label for="country">Country</label><br />
               <p-dropdown
+                [options]="countries"
                 formControlName="country"
                 optionLabel="name"
                 optionValue="id"

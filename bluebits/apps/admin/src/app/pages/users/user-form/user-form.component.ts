@@ -17,6 +17,7 @@ export class UserFormComponent implements OnInit {
   isSubmitted!: boolean;
   editMode = false;
   currentCategoryId!: string;
+  countries: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,9 +28,15 @@ export class UserFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this._initUserForm();
+    this._getCountries();
+    this._checkEditMode();
+  }
+
+  private _initUserForm() {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       isAdmin: [false, Validators.required],
       phone: [0, Validators.required],
@@ -39,9 +46,11 @@ export class UserFormComponent implements OnInit {
       city: ['', Validators.required],
       country: ['', Validators.required],
     });
-    this._checkEditMode();
   }
 
+  private _getCountries() {
+    this.countries = this.userService.getCountries();
+  }
   Submit() {
     this.isSubmitted = true;
     if (this.form.invalid) {
@@ -53,6 +62,12 @@ export class UserFormComponent implements OnInit {
       email: this.userForm['email'].value,
       isAdmin: this.userForm['isAdmin'].value,
       country: this.userForm['country'].value,
+      apartment: this.userForm['apartment'].value,
+      passwordHash: this.userForm['password'].value,
+      street: this.userForm['street'].value,
+      zip: this.userForm['zipCode'].value,
+      phone: Number(this.userForm['phone'].value),
+      city: this.userForm['city'].value,
     };
 
     if (this.editMode) {
@@ -115,10 +130,18 @@ export class UserFormComponent implements OnInit {
         this.editMode = true;
         this.currentCategoryId = param['id'];
         this.userService.getUser(param['id']).subscribe((user) => {
-          this.userForm['name'].setValue(user.user.name);
-          this.userForm['email'].setValue(user.user.email);
-          this.userForm['isAdmin'].setValue(user.user.isAdmin);
-          this.userForm['country'].setValue(user.user.country);
+          console.log(user.users);
+          this.userForm['name'].setValue(user.users.name);
+          this.userForm['email'].setValue(user.users.email);
+          this.userForm['isAdmin'].setValue(user.users.isAdmin);
+          this.userForm['country'].setValue(user.users.country);
+          this.userForm['apartment'].setValue(user.users.apartment);
+          this.userForm['street'].setValue(user.users.street);
+          this.userForm['zipCode'].setValue(user.users.zip);
+          this.userForm['phone'].setValue(user.users.phone);
+          this.userForm['city'].setValue(user.users.city);
+          this.userForm['password'].setValidators([]);
+          this.userForm['password'].updateValueAndValidity();
         });
       }
     });
@@ -126,5 +149,9 @@ export class UserFormComponent implements OnInit {
 
   get userForm() {
     return this.form.controls;
+  }
+
+  onCancel() {
+    this.location.back();
   }
 }
