@@ -25,6 +25,7 @@ router.get("/getOrders", (req, res) => {
 
 //getById
 router.get("/:orderid", (req, res) => {
+  console.log(req.params.orderid);
   Order.findById(req.params.orderid)
     .populate("user", "name")
     .populate({
@@ -121,10 +122,12 @@ router.post("/addOrder", async (req, res) => {
 
 router.put("/:orderid", (req, res) => {
   const { status } = req.body;
+  console.log(status);
   Order.findByIdAndUpdate(req.params.orderid, {
     status: status,
   })
     .then((updatedOrder) => {
+      console.log(updatedOrder);
       if (!updatedOrder) {
         return res.status(404).json({
           message: "Order doesn't exist",

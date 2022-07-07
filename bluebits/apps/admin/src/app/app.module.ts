@@ -15,6 +15,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
 import { TagModule } from 'primeng/tag';
 import { InputMaskModule } from 'primeng/inputmask';
+import { FieldsetModule } from 'primeng/fieldset';
 
 import { AppComponent } from './app.component';
 
@@ -32,6 +33,8 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { ProductFormComponent } from './pages/products/product-form/product-form.component';
 import { UserListComponent } from './pages/users/user-list/user-list.component';
 import { UserFormComponent } from './pages/users/user-form/user-form.component';
+import { OrderDetailsComponent } from './pages/orders/order-details/order-details.component';
+import { OrderListComponent } from './pages/orders/order-list/order-list.component';
 
 const routes: Routes = [
   {
@@ -48,6 +51,8 @@ const routes: Routes = [
       { path: 'userList', component: UserListComponent },
       { path: 'userForm', component: UserFormComponent },
       { path: 'userForm/:id', component: UserFormComponent },
+      { path: 'orderList', component: OrderListComponent },
+      { path: 'orderDetails/:id', component: OrderDetailsComponent },
     ],
   },
 ];
@@ -63,6 +68,8 @@ const routes: Routes = [
     ProductListComponent,
     UserListComponent,
     UserFormComponent,
+    OrderDetailsComponent,
+    OrderListComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +93,7 @@ const routes: Routes = [
     EditorModule,
     TagModule,
     InputMaskModule,
+    FieldsetModule,
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent],
