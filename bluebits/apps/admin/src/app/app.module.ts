@@ -25,7 +25,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProductListComponent } from './pages/products/product-list/product-list.component';
 import { CategoryListComponent } from './categories/category-list/category-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -35,11 +35,17 @@ import { UserListComponent } from './pages/users/user-list/user-list.component';
 import { UserFormComponent } from './pages/users/user-form/user-form.component';
 import { OrderDetailsComponent } from './pages/orders/order-details/order-details.component';
 import { OrderListComponent } from './pages/orders/order-list/order-list.component';
+import {
+  AuthguardService,
+  JwtInterceptorService,
+  UsersModule,
+} from '@bluebits/users';
 
 const routes: Routes = [
   {
     path: '',
     component: ShellComponent,
+    canActivate: [AuthguardService],
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'productList', component: ProductListComponent },
@@ -94,8 +100,17 @@ const routes: Routes = [
     TagModule,
     InputMaskModule,
     FieldsetModule,
+    UsersModule,
   ],
-  providers: [MessageService, ConfirmationService],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

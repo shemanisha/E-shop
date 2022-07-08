@@ -195,6 +195,7 @@ router.post("/login", (req, res) => {
           token: token,
         });
       } else {
+        console.log("hello");
         res.status(400).json({
           message: "Incorrect password",
         });

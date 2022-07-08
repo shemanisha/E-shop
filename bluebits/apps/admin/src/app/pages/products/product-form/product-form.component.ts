@@ -58,7 +58,6 @@ export class ProductFormComponent implements OnInit {
     Object.keys(this.productForm).map((key) => {
       productFormData.append(key, this.productForm[key].value);
     });
-    console.log(productFormData);
     if (this.editMode) {
       this._updateProduct(productFormData);
     } else {
@@ -164,5 +163,8 @@ export class ProductFormComponent implements OnInit {
       };
       fileReader.readAsDataURL(file);
     }
+  }
+  onCancel() {
+    this.location.back();
   }
 }

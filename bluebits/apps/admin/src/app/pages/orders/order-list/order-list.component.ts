@@ -4,28 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order, OrderService } from '@bluebits/products';
 import { ConfirmationService, MessageService } from 'primeng/api';
-const ORDER_STATUS = {
-  0: {
-    label: 'Pending',
-    color: 'primary',
-  },
-  1: {
-    label: 'Processed',
-    color: 'warning',
-  },
-  2: {
-    label: 'Shipped',
-    color: 'warning',
-  },
-  3: {
-    label: 'Delivered',
-    color: 'success',
-  },
-  4: {
-    label: 'Failed',
-    color: 'danger',
-  },
-};
+import { ORDER_STATUS } from '../order.constant';
 
 @Component({
   selector: 'admin-order-list',
@@ -47,7 +26,7 @@ export class OrderListComponent implements OnInit {
 
   deleteOrder(orderid: string) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete this category?',
+      message: 'Are you sure that you want to delete this order?',
       accept: () => {
         this.orderService.deleteOrder(orderid).subscribe(
           (data) => {
@@ -78,6 +57,7 @@ export class OrderListComponent implements OnInit {
   private _getOrders() {
     this.orderService.getOrders().subscribe((data) => {
       this.orders = data.orders;
+      console.log(this.orders);
     });
   }
 }

@@ -4,15 +4,15 @@
     <p-fieldset legend="Order details" [toggleable]="true" styleClass="mb-4">
       <div class="grid">
         <div class="col-4">
-          <h5>Order id</h5>
+          <h4>Order id</h4>
           <p>{{ order.id }}</p>
         </div>
         <div class="col-4">
-          <h5>Date</h5>
+          <h4>Date</h4>
           <p>{{ order.dateOrdered | date: 'short' }}</p>
         </div>
         <div class="col-4">
-          <h5>Status</h5>
+          <h4>Status</h4>
           <p-dropdown
             [options]="orderStatuses"
             optionLabel="name"
@@ -22,19 +22,19 @@
           ></p-dropdown>
         </div>
         <div class="col-4">
-          <h5>Total Price</h5>
+          <h4>Total Price</h4>
           <p>{{ order.totalPrice | currency }}</p>
         </div>
       </div>
     </p-fieldset>
     <p-fieldset legend="Order items" [toggleable]="true" styleClass="mb-4">
-      <div class="grid mb-5">
-        <div class="col-2 p-text-bold">Name</div>
-        <div class="col-2 p-text-bold">Brand</div>
-        <div class="col-2 p-text-bold">Category</div>
-        <div class="col-2 p-text-bold">Price</div>
-        <div class="col-2 p-text-bold">Quantity</div>
-        <div class="col-2 p-text-bold">Sub Total</div>
+      <div class="grid mb-4">
+        <h4 class="col-2">Name</h4>
+        <h4 class="col-2">Brand</h4>
+        <h4 class="col-2">Category</h4>
+        <h4 class="col-2">Price</h4>
+        <h4 class="col-2">Quantity</h4>
+        <h4 class="col-2">Sub Total</h4>
       </div>
       <div class="grid mb-5" *ngFor="let orderItem of order.orderItems">
         <div class="col-2">{{ orderItem.product?.name }}</div>
@@ -46,17 +46,26 @@
           {{ orderItem.product?.price * orderItem?.quantity | currency }}
         </div>
       </div>
-      <div class="grid" style="color: green; font-weight: bold">
-        <div class="col-2">Total Price</div>
+      <div
+        class="grid"
+        style="
+          color: green;
+          font-weight: bold;
+          position: absolute;
+          left: 70%;
+          top: 130%;
+        "
+      >
+        <div class="col-10">Total Price</div>
         <div class="col-2">
-          {{ order.totalPrice }}
+          {{ order.totalPrice | currency }}
         </div>
       </div>
     </p-fieldset>
     <p-fieldset legend="Order Address" [toggleable]="true" styleClass="mb-4">
       <div class="grid mb-5">
         <div class="col-4 p-text-bold">
-          <h5>Order Address</h5>
+          <h4>Order Address</h4>
           <p>
             {{ order.shippingAddress1 }}<br />
             {{ order.shippingAddress2 }}<br />
@@ -65,13 +74,13 @@
           </p>
         </div>
         <div class="col-4 p-text-bold">
-          <h5>Customer Info</h5>
+          <h4>Customer Info</h4>
           <p>
             {{ order.user?.name }}
           </p>
         </div>
         <div class="col-4 p-text-bold">
-          <h5>Contact Info</h5>
+          <h4>Contact Info</h4>
           <p>
             {{ order.phone }}
           </p>

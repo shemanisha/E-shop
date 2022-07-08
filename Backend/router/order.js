@@ -151,28 +151,22 @@ router.put("/:orderid", (req, res) => {
 //deleteOrder
 router.delete("/:orderid", (req, res) => {
   Order.findByIdAndRemove(req.params.orderid)
-    .then((deletedOrder) => {
-      if (!deletedOrder) {
-        return res.status(404).json({
-          message: "Order doesn't exist",
-          success: false,
+    .then(async (order) => {
+      if (order) {
+        await order.orderItems.map(async (orderItem) => {
+          await OrderItem.findByIdAndRemove(orderItem);
         });
+        return res
+          .status(200)
+          .json({ success: true, message: "the order is deleted!" });
+      } else {
+        return res
+          .status(404)
+          .json({ success: false, message: "order not found!" });
       }
-      deletedOrder.orderItems.map((order) => {
-        OrderItem.findByIdAndDelete(order).then(() => {
-          return res.status(200).json({
-            order: order,
-            message: "Order deleted successfully",
-            success: true,
-          });
-        });
-      });
     })
     .catch((err) => {
-      return res.status(500).json({
-        message: err.message,
-        success: false,
-      });
+      return res.status(500).json({ success: false, error: err });
     });
 });
 

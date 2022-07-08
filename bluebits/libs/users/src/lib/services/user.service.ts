@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../models/User.model';
+import { User } from '../modals/User.model';
 import * as countriesLib from 'i18n-iso-countries';
 declare const require: any;
 

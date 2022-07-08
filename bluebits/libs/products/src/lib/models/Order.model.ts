@@ -1,5 +1,5 @@
 import { OrderItem } from './OrderItem.model';
-import { User } from './User.model';
+import { User } from '../../../../users/src/lib/modals/User.model';
 
 export class Order {
   id?: string;
