@@ -1,15 +1,15 @@
-import { OrderItem } from './OrderItem.model';
-import { User } from '../../../../users/src/lib/modals/User.model';
+import { OrderItem } from './order-item';
+import { User } from '@bluebits/users';
 
 export class Order {
   id?: string;
   orderItems?: OrderItem[];
   shippingAddress1?: string;
-  shippingAddress2?: boolean;
+  shippingAddress2?: string;
   city?: string;
-  phone?: number;
   zip?: string;
   country?: string;
+  phone?: string;
   status?: number;
   totalPrice?: string;
   user?: User;

@@ -42,7 +42,7 @@ router.get("/getProducts", (req, res) => {
     .populate("category")
     .then((products) => {
       return res.status(200).json({
-        products: products,
+        product: products,
         message: "Products fetched successfully",
         success: true,
       });
@@ -61,7 +61,7 @@ router.get("/:productid", (req, res) => {
     .populate("category")
     .then((product) => {
       return res.status(200).json({
-        products: product,
+        product: product,
         message: "Product fetched successfully",
         success: true,
       });
@@ -255,8 +255,7 @@ router.get("/get/count", (req, res) => {
   Product.countDocuments()
     .then((count) => {
       return res.status(200).json({
-        productcount: count,
-        success: true,
+        productCount: count,
       });
     })
     .catch((err) => {

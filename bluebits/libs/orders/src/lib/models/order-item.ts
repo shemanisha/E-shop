@@ -1,4 +1,4 @@
-import { Product } from './Product.model';
+import { Product } from '@bluebits/products';
 
 export class OrderItem {
   product?: Product;

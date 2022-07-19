@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ProductService, Product } from '@bluebits/products';
+import { ProductsService, Product } from '@bluebits/products';
 
 @Component({
   selector: 'admin-product-list',
@@ -15,7 +15,7 @@ export class ProductListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductsService
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +54,7 @@ export class ProductListComponent implements OnInit {
 
   private _getProducts() {
     this.productService.getProducts().subscribe((data) => {
-      this.products = data.products;
+      this.products = data.product;
       console.log(this.products);
     });
   }

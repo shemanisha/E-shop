@@ -37,7 +37,7 @@
         <h4 class="col-2">Sub Total</h4>
       </div>
       <div class="grid mb-5" *ngFor="let orderItem of order.orderItems">
-        <div class="col-2">{{ orderItem.product?.name }}</div>
+        <div class="col-2">{{ orderItem.product.name }}</div>
         <div class="col-2">{{ orderItem.product?.brand }}</div>
         <div class="col-2">{{ orderItem.product?.category?.name }}</div>
         <div class="col-2">{{ orderItem.product?.price }}</div>
@@ -82,7 +82,7 @@
         <div class="col-4 p-text-bold">
           <h4>Contact Info</h4>
           <p>
-            {{ order.phone }}
+            {{ order.user.phone }}
           </p>
         </div>
       </div>

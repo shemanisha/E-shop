@@ -7,8 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
   CategoriesService,
   Category,
-  Product,
-  ProductService,
+  ProductsService,
 } from '@bluebits/products';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
@@ -27,7 +26,7 @@ export class ProductFormComponent implements OnInit {
   imageDisplay!: string | ArrayBuffer | null | undefined;
   constructor(
     private formBuilder: FormBuilder,
-    private productService: ProductService,
+    private productService: ProductsService,
     private categoryservice: CategoriesService,
     private messageService: MessageService,
     private location: Location,
@@ -90,12 +89,12 @@ export class ProductFormComponent implements OnInit {
   }
 
   private _addProduct(product: FormData) {
-    this.productService.saveProduct(product).subscribe(
+    this.productService.createProduct(product).subscribe(
       (data) => {
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
-          detail: data.message,
+          detail: 'Product created successfully',
         });
         timer(2000)
           .toPromise()
@@ -118,22 +117,20 @@ export class ProductFormComponent implements OnInit {
         this.editMode = true;
         this.currentProductId = param['id'];
         this.productService.getProduct(param['id']).subscribe((product) => {
-          console.log(product.products);
-          this.productForm['name'].setValue(product.products.name);
-          this.productForm['brand'].setValue(product.products.brand);
-          this.productForm['price'].setValue(product.products.price);
-          this.productForm['category'].setValue(product.products.category?.id);
+          console.log(product);
+          this.productForm['name'].setValue(product.product.name);
+          this.productForm['brand'].setValue(product.product.brand);
+          this.productForm['price'].setValue(product.product.price);
+          this.productForm['category'].setValue(product.product.category?.id);
           this.productForm['countInStock'].setValue(
-            product.products.countInStock
+            product.product.countInStock
           );
-          this.productForm['description'].setValue(
-            product.products.description
-          );
+          this.productForm['description'].setValue(product.product.description);
           this.productForm['richDescription'].setValue(
-            product.products.richDescription
+            product.product.richDescription
           );
-          this.productForm['isFeatured'].setValue(product.products.isFeatured);
-          this.imageDisplay = product.products.image;
+          this.productForm['isFeatured'].setValue(product.product.isFeatured);
+          this.imageDisplay = product.product.image;
           this.productForm['image'].setValidators([]);
           this.productForm['image'].updateValueAndValidity();
         });

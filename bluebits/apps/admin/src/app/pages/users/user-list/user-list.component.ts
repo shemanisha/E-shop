@@ -3,7 +3,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User, UserService } from '@bluebits/products';
+import { User, UsersService } from '@bluebits/users';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
 
@@ -15,7 +15,7 @@ export class UserListComponent implements OnInit {
   users: User[] = [];
   constructor(
     private confirmationService: ConfirmationService,
-    private userService: UserService,
+    private userService: UsersService,
     private messageService: MessageService,
     private router: Router,
     private location: Location
@@ -31,7 +31,6 @@ export class UserListComponent implements OnInit {
       accept: () => {
         this.userService.deleteUser(userid).subscribe(
           (data) => {
-            console.log(data);
             this._getUsers();
             this.messageService.add({
               severity: 'success',

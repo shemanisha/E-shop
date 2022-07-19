@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Order, OrderService } from '@bluebits/products';
+import { Order, OrdersService } from '@bluebits/orders';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ORDER_STATUS } from '../order.constant';
 
@@ -15,7 +15,7 @@ export class OrderListComponent implements OnInit {
   orders: Order[] = [];
   constructor(
     private confirmationService: ConfirmationService,
-    private orderService: OrderService,
+    private orderService: OrdersService,
     private messageService: MessageService,
     private router: Router
   ) {}

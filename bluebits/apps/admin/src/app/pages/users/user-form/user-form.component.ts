@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { User, UserService } from '@bluebits/products';
+import { User, UsersService } from '@bluebits/users';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
 import { Location } from '@angular/common';
@@ -21,7 +21,7 @@ export class UserFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService,
+    private userService: UsersService,
     private messageService: MessageService,
     private location: Location,
     private route: ActivatedRoute
@@ -56,6 +56,7 @@ export class UserFormComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
     const user: User = {
       id: this.currentCategoryId,
       name: this.userForm['name'].value,
@@ -66,10 +67,10 @@ export class UserFormComponent implements OnInit {
       passwordHash: this.userForm['password'].value,
       street: this.userForm['street'].value,
       zip: this.userForm['zipCode'].value,
-      phone: Number(this.userForm['phone'].value),
+      phone: +this.userForm['phone'].value,
       city: this.userForm['city'].value,
     };
-
+    console.log(user);
     if (this.editMode) {
       this._updateUser(user);
     } else {
@@ -83,7 +84,7 @@ export class UserFormComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
-          detail: data.message,
+          detail: 'Details updated successfully',
         });
         timer(2000)
           .toPromise()
@@ -102,12 +103,12 @@ export class UserFormComponent implements OnInit {
   }
 
   private _addUser(user: User) {
-    this.userService.saveUser(user).subscribe(
+    this.userService.createUser(user).subscribe(
       (data) => {
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
-          detail: data.message,
+          detail: 'Details added successfully',
         });
         timer(2000)
           .toPromise()

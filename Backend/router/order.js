@@ -122,6 +122,7 @@ router.post("/addOrder", async (req, res) => {
 
 router.put("/:orderid", (req, res) => {
   const { status } = req.body;
+
   console.log(status);
   Order.findByIdAndUpdate(req.params.orderid, {
     status: status,
@@ -178,7 +179,7 @@ router.get("/get/TotalSales", (req, res) => {
     },
   ]).then((totalSales) => {
     console.log(totalSales);
-    return res.status(200).send({ totalSales: totalSales.pop().totalsales });
+    return res.status(200).send({ totalsales: totalSales.pop().totalsales });
   });
 });
 
@@ -187,8 +188,7 @@ router.get("/get/count", (req, res) => {
   Order.countDocuments()
     .then((count) => {
       return res.status(200).json({
-        count: count,
-        success: true,
+        orderCount: count,
       });
     })
     .catch((err) => {

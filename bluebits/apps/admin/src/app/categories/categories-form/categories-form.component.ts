@@ -40,6 +40,7 @@ export class CategoriesFormComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
     const category: Category = {
       id: this.currentCategoryId,
       name: this.categoryForm['name'].value,
@@ -47,9 +48,11 @@ export class CategoriesFormComponent implements OnInit {
       color: this.categoryForm['color'].value,
     };
 
+    console.log('editMode', this.editMode);
     if (this.editMode) {
       this._updateCategory(category);
     } else {
+      alert('hello');
       this._addCategory(category);
     }
   }
@@ -81,6 +84,7 @@ export class CategoriesFormComponent implements OnInit {
   private _addCategory(category: Category) {
     this.categoryService.saveCategory(category).subscribe(
       (data) => {
+        console.log(data);
         this.messageService.add({
           severity: 'success',
           summary: 'Success',

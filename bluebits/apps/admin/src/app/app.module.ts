@@ -40,28 +40,8 @@ import {
   JwtInterceptorService,
   UsersModule,
 } from '@bluebits/users';
+import { AppRoutingModule } from './app-routing.module';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: ShellComponent,
-    canActivate: [AuthguardService],
-    children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'productList', component: ProductListComponent },
-      { path: 'productForm', component: ProductFormComponent },
-      { path: 'productForm/:id', component: ProductFormComponent },
-      { path: 'categoryList', component: CategoryListComponent },
-      { path: 'categoryForm', component: CategoriesFormComponent },
-      { path: 'categoryForm/:id', component: CategoriesFormComponent },
-      { path: 'userList', component: UserListComponent },
-      { path: 'userForm', component: UserFormComponent },
-      { path: 'userForm/:id', component: UserFormComponent },
-      { path: 'orderList', component: OrderListComponent },
-      { path: 'orderDetails/:id', component: OrderDetailsComponent },
-    ],
-  },
-];
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +60,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    AppRoutingModule,
     CardModule,
     ToolbarModule,
     ButtonModule,

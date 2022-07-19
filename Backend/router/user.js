@@ -17,6 +17,7 @@ router.post("/register", (req, res) => {
     zip,
     city,
     country,
+    street,
   } = req.body;
   console.log(req.body);
   passwordHash = bcrypt.hashSync(passwordHash, 10);
@@ -30,6 +31,7 @@ router.post("/register", (req, res) => {
     zip,
     city,
     country,
+    street,
   });
   user
     .save()
@@ -107,6 +109,7 @@ router.put("/:userId", (req, res) => {
     zip,
     city,
     country,
+    street,
   } = req.body;
 
   User.findById(req.params.userId).then((user) => {
@@ -127,6 +130,7 @@ router.put("/:userId", (req, res) => {
     zip: zip,
     city: city,
     country: country,
+    street: street,
   })
     .then((updatedUser) => {
       if (!updatedUser) {
@@ -154,9 +158,10 @@ router.delete("/:userId", (req, res) => {
   if (!mongoose.isValidObjectId(req.params.userId)) {
     return res.status(400).send("Invalid user id");
   }
-  console.log(req.params.userId);
-  User.findByIdAndRemove(req.params.userid)
+
+  User.findByIdAndRemove(req.params.userId)
     .then((user) => {
+      console.log(user);
       return res.status(200).json({
         message: "User deleted successfully",
         success: true,
@@ -195,7 +200,6 @@ router.post("/login", (req, res) => {
           token: token,
         });
       } else {
-        console.log("hello");
         res.status(400).json({
           message: "Incorrect password",
         });
@@ -209,8 +213,7 @@ router.get("/get/count", (req, res) => {
   User.countDocuments()
     .then((count) => {
       return res.status(200).json({
-        Usercount: count,
-        success: true,
+        userCount: count,
       });
     })
     .catch((err) => {
