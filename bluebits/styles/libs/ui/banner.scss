@@ -11,12 +11,29 @@
     h1 {
       margin: 0;
       font-size: 3em;
-      font-weight: 500;
+      font-weight: 800;
     }
     h2 {
       margin: 0;
       font-size: 2em;
       font-weight: 300;
+    }
+  }
+  &-image {
+    padding: 15px;
+    text-align: right;
+  }
+
+  &-button {
+    background-color: var(--surface-0);
+    color: $primary-color;
+    border: 0;
+    height: 50px;
+
+    &:enabled:hover {
+      background-color: var(--surface-0);
+      color: $primary-color;
+      border: 0;
     }
   }
 }
