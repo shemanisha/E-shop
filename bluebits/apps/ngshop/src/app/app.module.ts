@@ -12,6 +12,9 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavComponent } from './shared/nav/nav.component';
 
+import { ProductsModule } from '@bluebits/products';
+import { UiModule } from '@bluebits/ui';
+
 const routes: Routes = [
   {
     path: '',
@@ -34,6 +37,8 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    ProductsModule,
+    UiModule,
     RouterModule.forRoot(routes),
     AccordionModule,
     BrowserAnimationsModule,

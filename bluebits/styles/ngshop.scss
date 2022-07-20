@@ -6,9 +6,11 @@
 @import './base/fonts.scss';
 @import './base/colors.scss';
 
-@import './apps/ngshop/pages/shared/footer.scss';
 @import './apps/ngshop/pages/shared/header.scss';
+@import './apps/ngshop/pages/shared/footer.scss';
 @import './apps/ngshop/pages/shared/nav.scss';
+
+@import './libs/products/products.scss';
 
 .container {
   width: 1200px;
