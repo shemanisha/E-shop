@@ -14,6 +14,7 @@ import { NavComponent } from './shared/nav/nav.component';
 
 import { ProductsModule } from '@bluebits/products';
 import { UiModule } from '@bluebits/ui';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   {
@@ -39,6 +40,7 @@ const routes: Routes = [
     BrowserModule,
     ProductsModule,
     UiModule,
+    HttpClientModule,
     RouterModule.forRoot(routes),
     AccordionModule,
     BrowserAnimationsModule,

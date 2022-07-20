@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../../models/Category.model';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'products-categories-banner',
@@ -6,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styles: [],
 })
 export class CategoriesBannerComponent implements OnInit {
-  constructor() {}
+  categories: Category[] = [];
+  constructor(private categoryService: CategoriesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories.categories;
+    });
+  }
 }

@@ -6,11 +6,20 @@
   }
   .category {
     min-height: 100px;
-    border-radius: 5px;
+    border-radius: 14px;
     display: flex;
     justify-content: center;
     background-color: grey;
     align-items: center;
     flex-direction: column;
+    cursor: pointer;
+
+    pi {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+  }
+  &-name {
+    font-size: 1.2em;
   }
 }
