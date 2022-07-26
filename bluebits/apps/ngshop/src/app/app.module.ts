@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
@@ -14,6 +16,8 @@ import { NavComponent } from './shared/nav/nav.component';
 import { ProductsModule } from '@bluebits/products';
 import { UiModule } from '@bluebits/ui';
 import { HttpClientModule } from '@angular/common/http';
+import { OrdersModule } from '@bluebits/orders';
+import { MessageComponent } from './shared/message/message.component';
 
 const routes: Routes = [
   {
@@ -29,6 +33,7 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     NavComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,8 +43,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     AccordionModule,
     BrowserAnimationsModule,
+    OrdersModule,
+    ToastModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,0 +1,49 @@
+<div class="cart-page">
+  <div class="grid">
+    <div class="col-8">
+      <div>
+        <p-button
+          icon="pi pi-arrow-left"
+          label="Continue Shopping"
+          (onClick)="backToShop()"
+        ></p-button>
+      </div>
+      <div>
+        <h4>My Cart : {{ 2 }} Items</h4>
+      </div>
+      <div class="cart-shipping mb-5">
+        Shipping after the payment , Delivery time 1 to 4 working
+      </div>
+      <div class="cart-item">
+        <div class="grid p-fluid">
+          <div class="col-2 cart-item-image">
+            <img src="" />
+          </div>
+          <div class="col-7">
+            <div class="cart-item-name">Product name</div>
+            <div class="cart-item-price">{{ 200 | currency }}</div>
+            <div class="cart-item-remove">
+              <p-button icon="pi pi-trash" (onClick)="deleteCartItem()">
+              </p-button>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="pt-3 cart-item-quantity">
+              <p-inputNumber
+                mode="decimal"
+                [showButtons]="true"
+                inputId="quantity"
+                [min]="1"
+                [max]="100"
+              ></p-inputNumber>
+            </div>
+            <div class="cart-item-subtotal">
+              Subtotal:
+              <span class="cart-item-subtotal-value">{{ 200 | currency }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
