@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './category-list.component.html',
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
-  categories: Category[] = [{}];
+  categories: Category[] = [];
   endsSubs: Subject<any> = new Subject();
   constructor(
     private categoryservice: CategoriesService,

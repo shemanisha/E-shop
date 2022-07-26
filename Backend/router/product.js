@@ -37,7 +37,8 @@ router.get("/getProducts", (req, res) => {
   if (req.query.categories) {
     filter = { category: req.query.categories.split(",") };
   }
-  Product.find({ filter })
+
+  Product.find(filter)
     .select()
     .populate("category")
     .then((products) => {
