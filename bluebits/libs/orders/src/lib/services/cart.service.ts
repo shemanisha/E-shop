@@ -39,10 +39,19 @@ export class CartService {
     } else {
       cart.items?.push(cartItem);
     }
-    console.log(cart);
+
     const cartJson = JSON.stringify(cart);
     localStorage.setItem(CARTKEY, cartJson);
     this.cart$.next(cart);
     return cart;
+  }
+
+  deleteCartItem(productid: string) {
+    const cart = this.getCart();
+    const newCart = cart.items.filter((item) => item.productid !== productid);
+    cart.items = newCart;
+    const cartJsonString = JSON.stringify(cart);
+    localStorage.setItem(CARTKEY, cartJsonString);
+    this.cart$.next(cart);
   }
 }
