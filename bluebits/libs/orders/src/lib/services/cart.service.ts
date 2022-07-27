@@ -25,15 +25,19 @@ export class CartService {
     return cart;
   }
 
-  setCartItem(cartItem: CartItem): Cart {
+  setCartItem(cartItem: CartItem, updateCartItem?: boolean): Cart {
     const cart: Cart = this.getCart();
     const CartItemExist = cart.items?.find(
       (item) => item.productid == cartItem.productid
     );
     if (CartItemExist) {
-      cart.items?.map((item) => {
+      cart.items.map((item) => {
         if (item.productid === cartItem.productid) {
-          item.quantity = item.quantity + cartItem.quantity;
+          if (updateCartItem) {
+            item.quantity = cartItem.quantity;
+          } else {
+            item.quantity = item.quantity + cartItem.quantity;
+          }
         }
       });
     } else {
