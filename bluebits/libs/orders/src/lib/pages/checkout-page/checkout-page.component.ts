@@ -2,26 +2,34 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from '@bluebits/users';
+import { Cart } from '../../models/cart';
+import { Order } from '../../models/order';
 import { OrderItem } from '../../models/order-item';
+import { CartService } from '../../services/cart.service';
+import { OrdersService } from '../../services/orders.service';
+import { ORDER_STATUS } from '../../order.constant';
 
 @Component({
   selector: 'orders-checkout-page',
-  templateUrl: './checkout-page.component.html'
+  templateUrl: './checkout-page.component.html',
 })
 export class CheckoutPageComponent implements OnInit {
   constructor(
     private router: Router,
     private usersService: UsersService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cartService: CartService,
+    private orderService: OrdersService
   ) {}
-  checkoutFormGroup: FormGroup;
+  checkoutFormGroup!: FormGroup;
   isSubmitted = false;
   orderItems: OrderItem[] = [];
-  userId: string;
-  countries = [];
+  userId!: string;
+  countries: any = [];
 
   ngOnInit(): void {
     this._initCheckoutForm();
+    this._getCartItems();
     this._getCountries();
   }
 
@@ -34,7 +42,16 @@ export class CheckoutPageComponent implements OnInit {
       country: ['', Validators.required],
       zip: ['', Validators.required],
       apartment: ['', Validators.required],
-      street: ['', Validators.required]
+      street: ['', Validators.required],
+    });
+  }
+  private _getCartItems() {
+    const cart: Cart = this.cartService.getCart();
+    this.orderItems = cart.items.map((item) => {
+      return {
+        product: item.productid,
+        quantity: item.quantity,
+      };
     });
   }
 
@@ -51,6 +68,22 @@ export class CheckoutPageComponent implements OnInit {
     if (this.checkoutFormGroup.invalid) {
       return;
     }
+
+    const order: Order = {
+      orderItems: this.orderItems,
+      shippingAddress1: this.checkoutForm['street'].value,
+      shippingAddress2: this.checkoutForm['apartment'].value,
+      city: this.checkoutForm['city'].value,
+      zip: this.checkoutForm['zip'].value,
+      country: this.checkoutForm['country'].value,
+      phone: 12345678,
+      status: 0,
+      user: this.userId,
+      dateOrdered: `${Date.now()}`,
+    };
+    this.orderService.createOrder(order).subscribe((order) => {
+      console.log('successfully save');
+    });
   }
 
   get checkoutForm() {

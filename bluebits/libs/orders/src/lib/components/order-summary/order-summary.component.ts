@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
@@ -11,6 +12,7 @@ import { OrdersService } from '../../services/orders.service';
 })
 export class OrderSummaryComponent implements OnInit {
   totalPrice!: number;
+  isCheckout = false;
   constructor(
     private cartService: CartService,
     private orderService: OrdersService,
@@ -19,6 +21,9 @@ export class OrderSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this._getOrderSummary();
+    this.router.url.includes('/checkout')
+      ? (this.isCheckout = true)
+      : (this.isCheckout = false);
   }
 
   private _getOrderSummary() {

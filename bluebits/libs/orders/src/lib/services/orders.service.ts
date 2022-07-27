@@ -22,7 +22,7 @@ export class OrdersService {
   }
 
   createOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(this.apiURLOrders, order);
+    return this.http.post<Order>(this.apiURLOrders + '/addOrder', order);
   }
 
   updateOrder(status: string, orderId: string): Observable<Order> {

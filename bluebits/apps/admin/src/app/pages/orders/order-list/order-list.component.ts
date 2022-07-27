@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order, OrdersService } from '@bluebits/orders';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ORDER_STATUS } from '../order.constant';
+import { ORDER_STATUS } from '@bluebits/orders';
 
 @Component({
   selector: 'admin-order-list',
