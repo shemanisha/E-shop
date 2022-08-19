@@ -15,9 +15,13 @@ import { NavComponent } from './shared/nav/nav.component';
 
 import { ProductsModule } from '@bluebits/products';
 import { UiModule } from '@bluebits/ui';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { OrdersModule } from '@bluebits/orders';
 import { MessageComponent } from './shared/message/message.component';
+import { JwtInterceptorService, UsersModule } from '@bluebits/users';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { NgxStripeModule } from 'ngx-stripe';
 
 const routes: Routes = [
   {
@@ -36,6 +40,11 @@ const routes: Routes = [
     MessageComponent,
   ],
   imports: [
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    NgxStripeModule.forRoot(
+      'pk_test_51LY5ZSSE5rEN3jY8cr7iDAyzTNAphl3Rbr2ljOU0QTWHwzlpWTf8zJiJQpEE6qn0LErQ0JW9lABVXUOb05rMLkxe00ppfnhT0p'
+    ),
     BrowserModule,
     ProductsModule,
     UiModule,
@@ -45,8 +54,17 @@ const routes: Routes = [
     BrowserAnimationsModule,
     OrdersModule,
     ToastModule,
+    UsersModule,
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true,
+    },
+  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

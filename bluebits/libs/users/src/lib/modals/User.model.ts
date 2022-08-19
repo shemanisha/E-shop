@@ -4,6 +4,7 @@ export class User {
   email?: string;
   isAdmin?: boolean;
   passwordHash?: string;
+  token?: string;
   phone?: number;
   street?: string;
   apartment?: string;

@@ -8,6 +8,8 @@ import { OrderItem } from '../../models/order-item';
 import { CartService } from '../../services/cart.service';
 import { OrdersService } from '../../services/orders.service';
 import { ORDER_STATUS } from '../../order.constant';
+import { take } from 'rxjs';
+import { StripeService } from 'ngx-stripe';
 
 @Component({
   selector: 'orders-checkout-page',
@@ -19,34 +21,37 @@ export class CheckoutPageComponent implements OnInit {
     private usersService: UsersService,
     private formBuilder: FormBuilder,
     private cartService: CartService,
-    private orderService: OrdersService
+    private orderService: OrdersService,
+    private stripService: StripeService
   ) {}
   checkoutFormGroup!: FormGroup;
   isSubmitted = false;
-  orderItems: OrderItem[] = [];
+  orderItems: any = [];
   userId!: string;
   countries: any = [];
 
   ngOnInit(): void {
     this._initCheckoutForm();
+    this._autoFillUserData();
     this._getCartItems();
     this._getCountries();
   }
 
   private _initCheckoutForm() {
     this.checkoutFormGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.email, Validators.required]],
-      phone: ['', Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      zip: ['', Validators.required],
-      apartment: ['', Validators.required],
-      street: ['', Validators.required],
+      name: ['Manisha shete', Validators.required],
+      email: ['meow15@gmail.com', [Validators.email, Validators.required]],
+      phone: ['12345678', Validators.required],
+      city: ['Thane', Validators.required],
+      country: ['India', Validators.required],
+      zip: ['400604', Validators.required],
+      apartment: ['abc', Validators.required],
+      street: ['abc', Validators.required],
     });
   }
   private _getCartItems() {
     const cart: Cart = this.cartService.getCart();
+    console.log(cart);
     this.orderItems = cart.items.map((item) => {
       return {
         product: item.productid,
@@ -81,12 +86,27 @@ export class CheckoutPageComponent implements OnInit {
       user: this.userId,
       dateOrdered: `${Date.now()}`,
     };
-    this.orderService.createOrder(order).subscribe((order) => {
-      console.log('successfully save');
-    });
+
+    this.orderService.cacheOrderData(order);
+    this.orderService
+      .createCheckoutSession(this.orderItems)
+      .subscribe((error) => {
+        if (error) {
+          console.log('error in redirect to payment');
+        }
+      });
   }
 
   get checkoutForm() {
     return this.checkoutFormGroup.controls;
+  }
+
+  private _autoFillUserData() {
+    this.usersService
+      .observeCurrentUser()
+      .pipe(take(1))
+      .subscribe((user) => {
+        console.log(user);
+      });
   }
 }

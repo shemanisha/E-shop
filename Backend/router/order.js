@@ -1,14 +1,26 @@
 const express = require("express");
 const Order = require("../model/Orders");
 const OrderItem = require("../model/OrderItem");
+const Product = require("../model/Product");
 const router = express.Router();
+const stripe = require("stripe")(
+  "sk_test_51LY5ZSSE5rEN3jY8OBivZC7qUQcYC3kPEog9EF2mhFmPL3Aw2JbMs8BnJx5RR8HBWFNT5Q6bqTKoEzSULZY5Lfd200ps0avTNi"
+);
 
 //getOrders
 router.get("/getOrders", (req, res) => {
   Order.find()
-    .populate("user", "name")
+    .populate("user")
+    .populate({
+      path: "orderItems",
+      populate: {
+        path: "product",
+        populate: "category",
+      },
+    })
     .sort({ dateOrdered: -1 })
     .then((orders) => {
+      console.log(orders);
       return res.status(200).json({
         orders: orders,
         message: "Orders fetched successfully",
@@ -25,7 +37,7 @@ router.get("/getOrders", (req, res) => {
 
 //getById
 router.get("/:orderid", (req, res) => {
-  console.log(req.params.orderid);
+  console.log("hello", req.params.orderid);
   Order.findById(req.params.orderid)
     .populate("user", "name")
     .populate({
@@ -104,6 +116,7 @@ router.post("/addOrder", async (req, res) => {
   order
     .save()
     .then((order) => {
+      console.log(order);
       return res.status(201).json({
         order: order,
         message: "Order created successfully",
@@ -116,6 +129,39 @@ router.post("/addOrder", async (req, res) => {
         success: false,
       });
     });
+});
+
+router.post("/create-checkout-session", async (req, res) => {
+  const orderItems = req.body;
+  if (!orderItems) {
+    return res.status(400).send("checkout session cannot be created");
+  }
+  const lineItems = await Promise.all(
+    orderItems.map(async (orderItem) => {
+      const product = await Product.findById(orderItem.product);
+      return {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: product.name,
+          },
+          unit_amount: product.price * 100,
+        },
+        quantity: orderItem.quantity,
+      };
+    })
+  );
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    mode: "payment",
+    success_url: "http://localhost:51098/success",
+    cancel_url: "http://localhost:51098/error",
+  });
+  console.log(session.id);
+  res.json({
+    id: session.id,
+  });
 });
 
 //update order
@@ -211,6 +257,7 @@ router.get("/get/userorders/:userid", (req, res) => {
     })
     .sort({ dateOrdered: -1 })
     .then((userorders) => {
+      console.log(userorders);
       return res.status(200).json({
         orders: userorders,
         message: "Orders fetched successfully",

@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Cart, CartItem } from '../models/cart';
@@ -18,6 +19,15 @@ export class CartService {
       const initialCartJson = JSON.stringify(initialCart);
       localStorage.setItem(CARTKEY, initialCartJson);
     }
+  }
+
+  emptyCart() {
+    const initialCart = {
+      items: [],
+    };
+    const initialCartJson = JSON.stringify(initialCart);
+    localStorage.setItem(CARTKEY, initialCartJson);
+    this.cart$.next(initialCart);
   }
   getCart(): Cart {
     const cartJsonString: string = localStorage.getItem(CARTKEY)!;

@@ -131,16 +131,16 @@ export class UserFormComponent implements OnInit {
         this.editMode = true;
         this.currentCategoryId = param['id'];
         this.userService.getUser(param['id']).subscribe((user) => {
-          console.log(user.users);
-          this.userForm['name'].setValue(user.users.name);
-          this.userForm['email'].setValue(user.users.email);
-          this.userForm['isAdmin'].setValue(user.users.isAdmin);
-          this.userForm['country'].setValue(user.users.country);
-          this.userForm['apartment'].setValue(user.users.apartment);
-          this.userForm['street'].setValue(user.users.street);
-          this.userForm['zipCode'].setValue(user.users.zip);
-          this.userForm['phone'].setValue(user.users.phone);
-          this.userForm['city'].setValue(user.users.city);
+          console.log(user);
+          this.userForm['name'].setValue(user.name);
+          this.userForm['email'].setValue(user.email);
+          this.userForm['isAdmin'].setValue(user.isAdmin);
+          this.userForm['country'].setValue(user.country);
+          this.userForm['apartment'].setValue(user.apartment);
+          this.userForm['street'].setValue(user.street);
+          this.userForm['zipCode'].setValue(user.zip);
+          this.userForm['phone'].setValue(user.phone);
+          this.userForm['city'].setValue(user.city);
           this.userForm['password'].setValidators([]);
           this.userForm['password'].updateValueAndValidity();
         });

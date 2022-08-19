@@ -83,11 +83,7 @@ router.get("/:userId", (req, res) => {
           success: false,
         });
       }
-      return res.status(200).json({
-        users: user,
-        success: true,
-        message: "User fetched successfully",
-      });
+      return res.status(200).send(user);
     })
     .catch((err) => {
       return res.status(500).json({

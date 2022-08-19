@@ -41,6 +41,9 @@ import {
   UsersModule,
 } from '@bluebits/users';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,11 @@ import { AppRoutingModule } from './app-routing.module';
     OrderListComponent,
   ],
   imports: [
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    NgxStripeModule.forRoot(
+      'pk_test_51LY5ZSSE5rEN3jY8cr7iDAyzTNAphl3Rbr2ljOU0QTWHwzlpWTf8zJiJQpEE6qn0LErQ0JW9lABVXUOb05rMLkxe00ppfnhT0p'
+    ),
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

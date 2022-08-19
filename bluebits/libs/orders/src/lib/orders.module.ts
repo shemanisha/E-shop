@@ -13,6 +13,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
+import { ThankYouComponent } from './pages/thank-you/thank-you.component';
+import { AuthguardService } from '@bluebits/users';
 
 const routes: Routes = [
   {
@@ -21,7 +23,12 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
+    canActivate: [AuthguardService],
     component: CheckoutPageComponent,
+  },
+  {
+    path: 'success',
+    component: ThankYouComponent,
   },
 ];
 
@@ -43,6 +50,7 @@ const routes: Routes = [
     CartPageComponent,
     OrderSummaryComponent,
     CheckoutPageComponent,
+    ThankYouComponent,
   ],
   exports: [CartIconComponent, OrderSummaryComponent],
 })

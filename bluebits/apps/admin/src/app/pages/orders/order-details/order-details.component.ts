@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order, OrdersService } from '@bluebits/orders';
 
-import { ORDER_STATUS } from '../order.constant';
+import { ORDER_STATUS } from '@bluebits/orders';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -39,6 +39,7 @@ export class OrderDetailsComponent implements OnInit {
       if (param['id']) {
         this.orderService.getOrder(param['id']).subscribe((data) => {
           this.order = data.order;
+          console.log(this.order);
           this.selectedStatus = data.order.status;
           console.log(this.selectedStatus);
         });
@@ -49,7 +50,6 @@ export class OrderDetailsComponent implements OnInit {
   onStatusChange(event: any) {
     this.orderService.updateOrder(event.value, this.order.id).subscribe(
       (data) => {
-        console.log(data);
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
