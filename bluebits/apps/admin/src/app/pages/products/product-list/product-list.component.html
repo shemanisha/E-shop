@@ -28,16 +28,14 @@
               <th pSortableColumn="name">
                 Name <p-sortIcon field="name"></p-sortIcon>
               </th>
-              <th>Image</th>
+              <th style="text-align: center">Image</th>
               <th pSortableColumn="price">
                 Price <p-sortIcon field="price"></p-sortIcon>
               </th>
               <th pSortableColumn="countInStock">
                 Stock <p-sortIcon field="countInStock"></p-sortIcon>
               </th>
-              <th pSortableColumn="category">
-                Category<p-sortIcon field="category"></p-sortIcon>
-              </th>
+              <th>Category</th>
               <th>Created At</th>
               <th></th>
             </tr>
@@ -45,7 +43,7 @@
           <ng-template pTemplate="body" let-product>
             <tr>
               <td>{{ product.name }}</td>
-              <td>
+              <td style="text-align: center; width: 30%; height: 20%">
                 <img
                   [src]="product.image"
                   [alt]="product.name"

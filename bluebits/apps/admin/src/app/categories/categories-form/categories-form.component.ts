@@ -48,11 +48,9 @@ export class CategoriesFormComponent implements OnInit {
       color: this.categoryForm['color'].value,
     };
 
-    console.log('editMode', this.editMode);
     if (this.editMode) {
       this._updateCategory(category);
     } else {
-      alert('hello');
       this._addCategory(category);
     }
   }
