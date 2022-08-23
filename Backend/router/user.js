@@ -193,6 +193,7 @@ router.post("/login", (req, res) => {
         return res.status(200).json({
           message: "User is authenticated",
           user: user.email,
+          isAdmin: user.isAdmin,
           token: token,
         });
       } else {

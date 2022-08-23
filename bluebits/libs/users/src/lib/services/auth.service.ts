@@ -20,11 +20,17 @@ export class AuthService {
   login(
     email: string,
     password: string
-  ): Observable<{ token: string; message: string; user: string }> {
+  ): Observable<{
+    token: string;
+    message: string;
+    user: string;
+    isAdmin: boolean;
+  }> {
     return this.httpClient.post<{
       token: string;
       message: string;
       user: string;
+      isAdmin: boolean;
     }>(`${this.apiUrl}login`, {
       email: email,
       passwordHash: password,
@@ -33,6 +39,6 @@ export class AuthService {
 
   logout() {
     this.token.removeItem();
-    this.router.navigate(['/productList']);
+    this.router.navigate(['/login']);
   }
 }

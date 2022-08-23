@@ -15,6 +15,7 @@ export class UserLoginComponent implements OnInit {
   form: FormGroup | any;
   isSubmitted = false;
   authError = false;
+  userisAdmin = false;
   authMessage = 'Email or password is incorrect';
   constructor(
     private formBuilder: FormBuilder,
@@ -47,6 +48,12 @@ export class UserLoginComponent implements OnInit {
       )
       .subscribe(
         (user) => {
+          if (user.isAdmin == false) {
+            this.authMessage = 'User is not admin';
+            this.userisAdmin = true;
+          }
+          console.log(this.authMessage);
+
           this.authError = false;
           this.localStorage.setItem(user.token);
           this.router.navigate(['/']);

@@ -22,8 +22,8 @@ export class AuthguardService implements CanActivate {
 
     if (token) {
       const tokenDecode = JSON.parse(atob(token.split('.')[1]));
-      console.log(tokenDecode);
-      if (tokenDecode.isAdmin && !this._tokenExpired(tokenDecode.exp)) {
+      console.log('hey', tokenDecode);
+      if (!tokenDecode.isAdmin && !this._tokenExpired(tokenDecode.exp)) {
         return true;
       }
     }

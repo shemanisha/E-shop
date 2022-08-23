@@ -10,6 +10,7 @@ import { OrdersService } from '../../services/orders.service';
 import { ORDER_STATUS } from '../../order.constant';
 import { take } from 'rxjs';
 import { StripeService } from 'ngx-stripe';
+import { LocalstorageService } from 'libs/users/src/lib/services/localstorage.service';
 
 @Component({
   selector: 'orders-checkout-page',
@@ -22,6 +23,7 @@ export class CheckoutPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private orderService: OrdersService,
+    private localStorageToken: LocalstorageService,
     private stripService: StripeService
   ) {}
   checkoutFormGroup!: FormGroup;
@@ -31,6 +33,12 @@ export class CheckoutPageComponent implements OnInit {
   countries: any = [];
 
   ngOnInit(): void {
+    const token = this.localStorageToken.getItem();
+    if (token) {
+      const tokenDecode = JSON.parse(atob(token.split('.')[1]));
+      this.userId = tokenDecode.userId;
+      console.log(this.userId);
+    }
     this._initCheckoutForm();
     this._autoFillUserData();
     this._getCartItems();

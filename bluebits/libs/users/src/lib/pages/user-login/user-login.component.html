@@ -59,7 +59,7 @@
                 styleClass="full-btn"
               ></p-button>
             </div>
-            <div class="col-12" *ngIf="authError">
+            <div class="col-12" *ngIf="authError || userisAdmin">
               <small class="p-error">{{ authMessage }}</small>
             </div>
           </div>

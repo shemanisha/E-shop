@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UsersModule } from '@bluebits/users';
 import { AuthguardService } from 'libs/users/src/lib/services/authguard.service';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 import { CategoryListComponent } from './categories/category-list/category-list.component';
@@ -18,7 +19,7 @@ const routes: Routes = [
     component: ShellComponent,
     canActivate: [AuthguardService],
     children: [
-      { path: ' ', component: DashboardComponent },
+      { path: '', component: DashboardComponent },
       { path: 'productList', component: ProductListComponent },
       { path: 'productForm', component: ProductFormComponent },
       { path: 'productForm/:id', component: ProductFormComponent },
@@ -35,7 +36,7 @@ const routes: Routes = [
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), UsersModule],
   exports: [RouterModule],
   declarations: [],
   providers: [],

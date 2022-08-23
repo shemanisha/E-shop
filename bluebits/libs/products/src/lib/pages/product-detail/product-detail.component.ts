@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartItem, CartService } from '@bluebits/orders';
 import { Subject } from 'rxjs';
 import { Product } from '../../models/Product.model';
@@ -17,7 +17,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductsService,
     private route: ActivatedRoute,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {

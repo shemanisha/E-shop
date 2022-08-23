@@ -20,7 +20,6 @@ router.get("/getOrders", (req, res) => {
     })
     .sort({ dateOrdered: -1 })
     .then((orders) => {
-      console.log(orders);
       return res.status(200).json({
         orders: orders,
         message: "Orders fetched successfully",
@@ -155,8 +154,8 @@ router.post("/create-checkout-session", async (req, res) => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: "http://localhost:51098/success",
-    cancel_url: "http://localhost:51098/error",
+    success_url: "http://localhost:56147/success",
+    cancel_url: "http://localhost:56147/error",
   });
   console.log(session.id);
   res.json({
