@@ -22,11 +22,16 @@ import { JwtInterceptorService, UsersModule } from '@bluebits/users';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { NgxStripeModule } from 'ngx-stripe';
+import { ContactUsComponent } from './shared/contact-us/contact-us.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
+  },
+  {
+    path: 'contactUs',
+    component: ContactUsComponent,
   },
 ];
 @NgModule({
@@ -38,6 +43,7 @@ const routes: Routes = [
     FooterComponent,
     NavComponent,
     MessageComponent,
+    ContactUsComponent,
   ],
   imports: [
     StoreModule.forRoot({}),

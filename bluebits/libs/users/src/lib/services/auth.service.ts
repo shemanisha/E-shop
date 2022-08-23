@@ -10,6 +10,7 @@ import { LocalstorageService } from './localstorage.service';
   providedIn: 'root',
 })
 export class AuthService {
+  apiUrl = 'http://localhost:3000/user/';
   constructor(
     private httpClient: HttpClient,
     private token: LocalstorageService,
@@ -24,7 +25,7 @@ export class AuthService {
       token: string;
       message: string;
       user: string;
-    }>('http://localhost:3000/user/login', {
+    }>(`${this.apiUrl}login`, {
       email: email,
       passwordHash: password,
     });
@@ -32,6 +33,6 @@ export class AuthService {
 
   logout() {
     this.token.removeItem();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/productList']);
   }
 }

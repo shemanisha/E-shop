@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthguardService } from 'libs/users/src/lib/services/authguard.service';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 import { CategoryListComponent } from './categories/category-list/category-list.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -15,9 +16,9 @@ const routes: Routes = [
   {
     path: '',
     component: ShellComponent,
-    // canActivate: [AuthguardService],
+    canActivate: [AuthguardService],
     children: [
-      { path: '', component: DashboardComponent },
+      { path: ' ', component: DashboardComponent },
       { path: 'productList', component: ProductListComponent },
       { path: 'productForm', component: ProductFormComponent },
       { path: 'productForm/:id', component: ProductFormComponent },
