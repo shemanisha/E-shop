@@ -154,8 +154,8 @@ router.post("/create-checkout-session", async (req, res) => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: "http://localhost:56147/success",
-    cancel_url: "http://localhost:56147/error",
+    success_url: "http://localhost:4200/success",
+    cancel_url: "http://localhost:4200/error",
   });
   console.log(session.id);
   res.json({

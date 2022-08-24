@@ -19,6 +19,7 @@ import { AuthguardService } from '@bluebits/users';
 const routes: Routes = [
   {
     path: 'cart',
+    canActivate: [AuthguardService],
     component: CartPageComponent,
   },
   {
