@@ -24,12 +24,26 @@ Delete category by clicking on red bin icon button.
 
 ![image](https://user-images.githubusercontent.com/96568158/187453246-8f5ed4ab-24fc-433f-8337-6b88a925bfc3.png)
 
+Product List dashboard:
+
+Functionalities:
+1.Create , update and delete product.
+2.Sort name, price and stock.
+
+![image](https://user-images.githubusercontent.com/96568158/187460313-bb961f52-e14b-4e74-8a31-433fea60b319.png)
+
+![image](https://user-images.githubusercontent.com/96568158/187460647-4b179de6-85f6-4579-899f-b1d6a3e1b736.png)
+
+
+
 
 Order List dashboard:
 
 Functionalities:
-1.Changing the status of an order.
-2.Deleting the order.
+1.Change the status of an order.
+2.Delete the order.
+
+
 
 Change the status of an order by clicking on status dropdown button.
 
@@ -39,6 +53,19 @@ Change the status of an order by clicking on status dropdown button.
 Delete the order by clicking on red bin icon button.
 
 ![image](https://user-images.githubusercontent.com/96568158/187456681-95b70cf3-b889-4aa9-8752-3c8ac5dfd25b.png)
+
+
+
+UserList dashboard:
+
+Functionalities:
+1. Create, update and delete user.
+
+![image](https://user-images.githubusercontent.com/96568158/187458620-66c1c587-fa7c-4d7b-85ca-f369d80c21b7.png)
+
+
+![image](https://user-images.githubusercontent.com/96568158/187459303-3b39129b-2def-4bac-9afc-1102715b7ea3.png)
+
 
 
 
