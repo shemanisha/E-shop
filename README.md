@@ -77,6 +77,40 @@ Delete the order by clicking on red bin icon button.
 
 
 
+NgShop:
+
+![image](https://user-images.githubusercontent.com/96568158/187467109-50ea097f-16a4-4fe6-ae8d-fdb8d942b9ac.png)
+
+Category page:
+
+![image](https://user-images.githubusercontent.com/96568158/187467497-afbbac33-69d1-46d5-a800-ada4ae71060a.png)
+
+Product detail page:
+
+![image](https://user-images.githubusercontent.com/96568158/187467861-f3dcae37-f342-4c6b-851d-e90d5aa76ffe.png)
+
+Cart page:
+
+![image](https://user-images.githubusercontent.com/96568158/187470823-86bb74c1-92af-4fc7-92a4-c78fc32f36be.png)
+
+
+checkout page:
+
+![image](https://user-images.githubusercontent.com/96568158/187471418-f51dc975-ed03-45c1-9a10-efa47804d8eb.png)
+
+
+Payment page:
+
+![image](https://user-images.githubusercontent.com/96568158/187476695-498d85ba-e77b-4312-a02b-49170294c1bb.png)
+
+
+Thank you page:
+
+![image](https://user-images.githubusercontent.com/96568158/187475572-91e0b416-395d-4366-a688-f14cfa6995b9.png)
+
+
+
+
 
 
 
