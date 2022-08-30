@@ -1,7 +1,28 @@
-# E-shop
+# Ng-shop
 
 
 Admin Panel:
+
+Admin Panel Dashboard:
+
+
+
+UserList dashboard:
+
+Functionalities:
+1. Create, update and delete user.
+
+![image](https://user-images.githubusercontent.com/96568158/187458620-66c1c587-fa7c-4d7b-85ca-f369d80c21b7.png)
+
+
+![image](https://user-images.githubusercontent.com/96568158/187459303-3b39129b-2def-4bac-9afc-1102715b7ea3.png)
+
+
+Login:
+1.Check whether user is admin or not.
+
+![image](https://user-images.githubusercontent.com/96568158/187464835-64808657-1e1d-48fe-9d3c-e325e6f9d681.png)
+
 
 CategoryList dashboard:
 
@@ -56,15 +77,7 @@ Delete the order by clicking on red bin icon button.
 
 
 
-UserList dashboard:
 
-Functionalities:
-1. Create, update and delete user.
-
-![image](https://user-images.githubusercontent.com/96568158/187458620-66c1c587-fa7c-4d7b-85ca-f369d80c21b7.png)
-
-
-![image](https://user-images.githubusercontent.com/96568158/187459303-3b39129b-2def-4bac-9afc-1102715b7ea3.png)
 
 
 
