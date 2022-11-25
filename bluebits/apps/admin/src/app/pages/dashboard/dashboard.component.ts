@@ -24,7 +24,6 @@ export class DashboardComponent implements OnInit {
       this.ordersService.getTotalSales(),
     ]).subscribe((values) => {
       this.statistics = values;
-      console.log('statistics' + values);
     });
   }
 }

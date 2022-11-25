@@ -39,9 +39,8 @@ export class OrderDetailsComponent implements OnInit {
       if (param['id']) {
         this.orderService.getOrder(param['id']).subscribe((data) => {
           this.order = data.order;
-          console.log(this.order);
+
           this.selectedStatus = data.order.status;
-          console.log(this.selectedStatus);
         });
       }
     });

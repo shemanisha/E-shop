@@ -36,7 +36,6 @@ router.get("/getOrders", (req, res) => {
 
 //getById
 router.get("/:orderid", (req, res) => {
-  console.log("hello", req.params.orderid);
   Order.findById(req.params.orderid)
     .populate("user", "name")
     .populate({
@@ -115,7 +114,6 @@ router.post("/addOrder", async (req, res) => {
   order
     .save()
     .then((order) => {
-      console.log(order);
       return res.status(201).json({
         order: order,
         message: "Order created successfully",
@@ -157,7 +155,7 @@ router.post("/create-checkout-session", async (req, res) => {
     success_url: "http://localhost:4200/success",
     cancel_url: "http://localhost:4200/error",
   });
-  console.log(session.id);
+
   res.json({
     id: session.id,
   });
@@ -167,8 +165,6 @@ router.post("/create-checkout-session", async (req, res) => {
 
 router.put("/:orderid", (req, res) => {
   const { status } = req.body;
-
-  console.log(status);
   Order.findByIdAndUpdate(req.params.orderid, {
     status: status,
   })
@@ -223,7 +219,6 @@ router.get("/get/TotalSales", (req, res) => {
       $group: { _id: null, totalsales: { $sum: "$totalPrice" } },
     },
   ]).then((totalSales) => {
-    console.log(totalSales);
     return res.status(200).send({ totalsales: totalSales.pop().totalsales });
   });
 });
@@ -256,7 +251,6 @@ router.get("/get/userorders/:userid", (req, res) => {
     })
     .sort({ dateOrdered: -1 })
     .then((userorders) => {
-      console.log(userorders);
       return res.status(200).json({
         orders: userorders,
         message: "Orders fetched successfully",

@@ -117,7 +117,6 @@ export class ProductFormComponent implements OnInit {
         this.editMode = true;
         this.currentProductId = param['id'];
         this.productService.getProduct(param['id']).subscribe((product) => {
-          console.log(product);
           this.productForm['name'].setValue(product.product.name);
           this.productForm['brand'].setValue(product.product.brand);
           this.productForm['price'].setValue(product.product.price);
@@ -145,7 +144,6 @@ export class ProductFormComponent implements OnInit {
   private _getCategories() {
     this.categoryservice.getCategories().subscribe((data) => {
       this.categories = data.categories;
-      console.log(data.categories);
     });
   }
 

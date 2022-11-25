@@ -31,20 +31,17 @@ export class ProductsListComponent implements OnInit {
     });
 
     this._getCategories();
-    console.log(this.isCategoryPage);
   }
 
   private _getProducts(categoryFilter?: string[]) {
     this.productService.getProducts(categoryFilter).subscribe((products) => {
       this.products = products.product;
-      console.log(this.products);
     });
   }
 
   private _getCategories() {
     this.categoryService.getCategories().subscribe((categories) => {
       this.categories = categories.categories;
-      console.log(this.categories);
     });
   }
 

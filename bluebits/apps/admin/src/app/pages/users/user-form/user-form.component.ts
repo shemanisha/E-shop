@@ -70,7 +70,7 @@ export class UserFormComponent implements OnInit {
       phone: +this.userForm['phone'].value,
       city: this.userForm['city'].value,
     };
-    console.log(user);
+
     if (this.editMode) {
       this._updateUser(user);
     } else {
@@ -131,7 +131,6 @@ export class UserFormComponent implements OnInit {
         this.editMode = true;
         this.currentCategoryId = param['id'];
         this.userService.getUser(param['id']).subscribe((user) => {
-          console.log(user);
           this.userForm['name'].setValue(user.name);
           this.userForm['email'].setValue(user.email);
           this.userForm['isAdmin'].setValue(user.isAdmin);

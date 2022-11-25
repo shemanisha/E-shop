@@ -19,7 +19,7 @@ router.post("/register", (req, res) => {
     country,
     street,
   } = req.body;
-  console.log(req.body);
+
   passwordHash = bcrypt.hashSync(passwordHash, 10);
   const user = new User({
     name,
@@ -157,7 +157,6 @@ router.delete("/:userId", (req, res) => {
 
   User.findByIdAndRemove(req.params.userId)
     .then((user) => {
-      console.log(user);
       return res.status(200).json({
         message: "User deleted successfully",
         success: true,

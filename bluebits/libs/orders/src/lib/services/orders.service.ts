@@ -24,7 +24,6 @@ export class OrdersService {
   }
 
   createOrder(order: Order): Observable<Order> {
-    console.log('order', order);
     return this.http.post<Order>(this.apiURLOrders + '/addOrder', order);
   }
 

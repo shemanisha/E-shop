@@ -11,7 +11,6 @@ export const getUsersState =
 
 export const getUser = createSelector(getUsersState, (state) => {
   state.user;
-  console.log(state.user);
 });
 
 export const getUserisAuth = createSelector(

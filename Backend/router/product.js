@@ -89,7 +89,6 @@ router.post("/addProduct", upload.single("image"), (req, res) => {
   const imageUrl = `${basePath}${image}`;
   Category.findById(req.body.category).then((category1) => {
     if (!category1) {
-      console.log(category1);
       return res.status(400).json({
         message: "Invalid Category",
       });
@@ -226,7 +225,6 @@ router.put("/:productid", upload.single("image"), (req, res) => {
         { new: true }
       )
         .then((updatedProduct) => {
-          console.log(updatedProduct);
           if (!updatedProduct) {
             return res.status(404).json({
               message: "Product doesn't exist",

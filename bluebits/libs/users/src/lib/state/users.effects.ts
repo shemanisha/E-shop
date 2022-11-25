@@ -7,7 +7,6 @@ import { LocalstorageService } from '../services/localstorage.service';
 import { UsersService } from '../services/users.service';
 
 import * as UsersActions from './users.actions';
-import * as UsersFeature from './users.reducer';
 
 @Injectable()
 export class UsersEffects {
@@ -39,8 +38,6 @@ export class UsersEffects {
     private localstorageService: LocalstorageService,
     private usersService: UsersService
   ) {
-    this.buildUserSession$.subscribe((data) => {
-      console.log('hello', data);
-    });
+    this.buildUserSession$.subscribe((data) => {});
   }
 }
